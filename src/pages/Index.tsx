@@ -33,6 +33,12 @@ const Index = () => {
       >
         Negócio fechado
       </a>
+
+      <div className="bg-white text-black px-6 py-3 rounded-lg shadow-md mt-4 fade-in">
+        <p className="text-sm font-medium">
+          Essa proposta acabará em 3 dias
+        </p>
+      </div>
     </div>
   );
 };
