@@ -2,10 +2,29 @@ import { useEffect, useState } from "react";
 
 const Index = () => {
   const [isVisible, setIsVisible] = useState(false);
+  const [timeLeft, setTimeLeft] = useState(72 * 60 * 60); // 72 hours in seconds
 
   useEffect(() => {
     setIsVisible(true);
   }, []);
+
+  useEffect(() => {
+    if (timeLeft <= 0) return;
+
+    const timer = setInterval(() => {
+      setTimeLeft(prev => prev - 1);
+    }, 1000);
+
+    return () => clearInterval(timer);
+  }, [timeLeft]);
+
+  const formatTime = (seconds: number) => {
+    const hours = Math.floor(seconds / 3600);
+    const minutes = Math.floor((seconds % 3600) / 60);
+    const secs = seconds % 60;
+
+    return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+  };
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center px-4 py-8 space-y-8 max-w-4xl mx-auto">
@@ -36,7 +55,7 @@ const Index = () => {
 
       <div className="bg-white text-black px-6 py-3 rounded-lg shadow-md mt-4 fade-in">
         <p className="text-sm font-medium">
-          Essa proposta acabará em 3 dias
+          Essa proposta acabará em {formatTime(timeLeft)}
         </p>
       </div>
     </div>
